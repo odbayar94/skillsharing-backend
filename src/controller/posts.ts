@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import asyncHandler from "express-async-handler";
+const { ObjectId } = require("mongodb");
 
 import { IError, IRequest, IPostResponse } from "../interfaces";
 import MyError from "../utils/MyError";
@@ -67,13 +68,14 @@ export const getAllPosts = asyncHandler(
 
 export const getSinglePost = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { username, password, email, lastname, firstname } = req.body;
-
-    // const user = await User.create({username, password, email})
-    const user = await service.registerUser(req.body);
-    res.status(200).json({
+    const post = await service.getSinglePost(ObjectId(req.params.id));
+    response = {
       success: true,
-      user: user,
-    });
+      statusCode: 200,
+      messageCode: "POST200",
+      message: "Хүсэлт амжилттай",
+      data: post,
+    };
+    res.status(200).json(response);
   }
 );
