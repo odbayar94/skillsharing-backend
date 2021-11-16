@@ -45,6 +45,8 @@ export interface IUserModel extends Document {
   username: string;
   email: string;
   password: string;
+  lastname: string;
+  firstname: string;
   createdAt: number;
   lastLogin: number;
 }

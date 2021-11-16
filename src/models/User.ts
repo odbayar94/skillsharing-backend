@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import mongoose, { Schema, model, Model, Document, ObjectId } from "mongoose";
+
 import { IUserModel } from "../interfaces";
 
 const customValidateEmail = function (email: string) {

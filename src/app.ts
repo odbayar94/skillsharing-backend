@@ -4,6 +4,7 @@ import cors from "cors";
 // import monitaRouter from "./routes/monita";
 
 import userRouter from "./routes/user";
+import postRouter from "./routes/post";
 import cookieParser from "cookie-parser";
 import errorHandler from "./middleware/error";
 import MyError from "./utils/MyError";
@@ -40,6 +41,7 @@ app.get("/", (req: Request, res: Response) => {
 
 //router
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/posts", postRouter);
 app.use(errorHandler);
 
 export default app;

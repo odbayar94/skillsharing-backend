@@ -5,13 +5,7 @@ import config from "../config";
 import MyError from "../utils/MyError";
 import User from "../models/User";
 
-import {
-  IUserCreate,
-  IResponse,
-  ILogin,
-  IError,
-  IRegisterUser,
-} from "../interfaces";
+import { IResponse, IError, IRegisterUser } from "../interfaces";
 
 const checkPassword = async function (
   enteredPassword: string,
