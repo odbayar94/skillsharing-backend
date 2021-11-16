@@ -1,11 +1,18 @@
 import { Request, Response, NextFunction } from "express";
 import asyncHandler from "express-async-handler";
 
-import { IError } from "../interfaces";
+import { IError, IRequest, IPostResponse } from "../interfaces";
 import MyError from "../utils/MyError";
 import User from "../models/User";
 
 import * as service from "../services";
+
+var response: IPostResponse = {
+  success: false,
+  statusCode: 401,
+  messageCode: "error",
+  message: "Service doesn't work",
+};
 
 var errorObj: IError = {
   message: "",
@@ -14,36 +21,47 @@ var errorObj: IError = {
 };
 
 export const createPost = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const response = await service.createPost(req.body);
-    // req.body;
-    // const response = true;
+  async (req: IRequest, res: Response, next: NextFunction) => {
+    req.body.userId = req.userId;
+    const postId = await service.createPost(req.body);
+
+    response = {
+      success: true,
+      statusCode: 200,
+      messageCode: "POST200",
+      message: "Хүсэлт амжилттай",
+      data: {
+        id: postId,
+      },
+    };
     res.status(200).json(response);
   }
 );
-export const updatePost = asyncHandler(
+
+// export const updatePost = asyncHandler(
+//   async (req: IRequest, res: Response, next: NextFunction) => {
+//     // const user = await User.create({username, password, email})
+//     const user = await service.updatePost(req.body);
+//     res.status(200).json({
+//       success: true,
+//       user: user,
+//     });
+//   }
+// );
+
+export const getAllPosts = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { username, password, email, lastname, firstname } = req.body;
+    //after I will add the pagination
 
-    // const user = await User.create({username, password, email})
-    const user = await service.registerUser(req.body);
-    res.status(200).json({
+    const posts = await service.getAllPosts();
+    response = {
       success: true,
-      user: user,
-    });
-  }
-);
-
-export const getAllPost = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const { username, password, email, lastname, firstname } = req.body;
-
-    // const user = await User.create({username, password, email})
-    const user = await service.registerUser(req.body);
-    res.status(200).json({
-      success: true,
-      user: user,
-    });
+      statusCode: 200,
+      messageCode: "POST200",
+      message: "Хүсэлт амжилттай",
+      data: posts,
+    };
+    res.status(200).json(response);
   }
 );
 

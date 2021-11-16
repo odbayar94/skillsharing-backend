@@ -24,26 +24,23 @@ var errorObj: IError = {
   statusCode: 401,
 };
 
+export const getAllPosts = async function () {
+  const posts = await Post.find();
+  return posts;
+};
 export const createPost = async function (req: IPostCreate) {
   try {
-    const { title, context } = req;
+    const { title, context, userId } = req;
     const post = await Post.create({
       title,
       context,
+      userId,
     });
     if (!post) {
       throw new Error();
     }
-    response = {
-      success: true,
-      statusCode: 200,
-      messageCode: "POST200",
-      message: "Хүсэлт амжилттай",
-      data: {
-        id: post._id,
-      },
-    };
-    return response;
+
+    return post._id;
   } catch (err: any) {
     throw new Error(err.code);
   }

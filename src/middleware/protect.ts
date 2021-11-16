@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 
 import config from "../config";
 import MyError from "../utils/MyError";
-import { IError, IRequest } from "../interfaces";
+import { IError, IRequest, TTokenObj } from "../interfaces";
 
 var errorObj: IError = {
   message: "",
@@ -33,10 +33,10 @@ const protect = asyncHandler(
       });
     }
 
-    const tokenObj = jwt.verify(token, config.jwtSecret);
-    const userId = ObjectId("615575e1ad87816358d970cb");
+    const tokenObj: any = jwt.verify(token, config.jwtSecret);
     // var userId = new mongoose.Types.ObjectId("615575e1ad87816358d970cb");
-    req.userId = userId;
+    req.userId = tokenObj.id;
+    req.userRole = tokenObj.role;
 
     next();
   }

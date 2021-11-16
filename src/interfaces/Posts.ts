@@ -5,9 +5,7 @@ export interface IPostResponse {
   statusCode: number;
   message: string;
   messageCode: string;
-  data?: {
-    id: ObjectId;
-  };
+  data?: any;
 }
 
 export interface IPost {
@@ -22,4 +20,5 @@ export interface IPost {
 export interface IPostCreate {
   title: string;
   context: string;
+  userId: ObjectId;
 }

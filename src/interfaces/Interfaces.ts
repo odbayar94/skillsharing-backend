@@ -1,5 +1,6 @@
 import { ObjectId } from "mongoose";
 import { Request, Response, NextFunction } from "express";
+import { type } from "os";
 
 export interface IUserCreate {
   email: string;
@@ -7,8 +8,14 @@ export interface IUserCreate {
   username: string;
 }
 
+export type TTokenObj = {
+  id: ObjectId;
+  role: string;
+};
+
 export interface IRequest extends Request {
   userId?: ObjectId;
+  userRole?: string;
 }
 
 export interface IResponse {
