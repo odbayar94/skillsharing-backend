@@ -5,20 +5,17 @@ import mongoose, { Schema, model, Model, Document, ObjectId } from "mongoose";
 
 import { IUserModel } from "../interfaces";
 
-const customValidateEmail = function (email: string) {
-  var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  return re.test(email);
-};
+// const customValidateEmail = function (email: string) {
+//   var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+//   return re.test(email);
+// };
 
 const UserSchema = new Schema(
   {
-    username: { type: String, required: true, unique: true },
     email: {
       type: String,
       required: true,
       unique: true,
-      lowercase: true,
-      validate: [customValidateEmail, "invalid email"],
     },
     role: {
       type: String,
@@ -29,9 +26,8 @@ const UserSchema = new Schema(
     lastname: { type: String, required: true },
     password: {
       type: String,
-      minlength: 8,
+      minlength: 6,
     },
-    lastLogin: { type: Number },
   },
   {
     timestamps: true,

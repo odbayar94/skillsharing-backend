@@ -25,12 +25,14 @@ export interface IResponse {
   messageCode: string;
   user?: IUser;
   // post?: IPost;
-  data?: IData;
+  data?: any;
 }
 
 export interface IUser {
   id: ObjectId;
   token?: string;
+  firstname?: string;
+  email?: string;
 }
 
 export interface IData {

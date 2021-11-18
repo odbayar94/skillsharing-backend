@@ -34,9 +34,9 @@ var errorObj: IError = {
   statusCode: 401,
 };
 
-export const getUser = async function (username: string, password: string) {
+export const getUser = async function (email: string, password: string) {
   try {
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ email });
 
     if (!user) {
       errorObj = {
@@ -62,9 +62,11 @@ export const getUser = async function (username: string, password: string) {
       statusCode: 200,
       messageCode: "LOGIN200",
       message: "Системд амжилттай нэвтэрлээ",
-      user: {
+      data: {
         id: user._id,
         token,
+        firstname: user.firstname,
+        email: user.email,
       },
     };
 
@@ -76,9 +78,8 @@ export const getUser = async function (username: string, password: string) {
 
 export const registerUser = async function (req: IRegisterUser) {
   try {
-    const { username, password, email, firstname, lastname } = req;
+    const { password, email, firstname, lastname } = req;
     const user = await User.create({
-      username,
       password,
       email,
       firstname,
@@ -92,8 +93,10 @@ export const registerUser = async function (req: IRegisterUser) {
       statusCode: 200,
       messageCode: "LOGIN200",
       message: "Системд амжилттай нэвтэрлээ",
-      user: {
+      data: {
         id: user._id,
+        firstname: user.firstname,
+        email: user.email,
       },
     };
     return response;

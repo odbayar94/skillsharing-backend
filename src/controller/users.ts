@@ -17,25 +17,19 @@ var errorObj: IError = {
 export const login = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     //request handler, validation
-    const { username, password } = req.body;
-    if (!username || !password) {
+    const { email, password } = req.body;
+    if (!email || !password) {
       throw new MyError({ ...errorObj, message: "Нэр нууц үг оруулна уу" });
     }
 
-    const userResponse = await service.getUser(username, password);
+    const userResponse = await service.getUser(email, password);
     //response handler, custom message ...
     res.status(userResponse.statusCode).json(userResponse);
   }
 );
 export const registerUser = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { username, password, email, lastname, firstname } = req.body;
-
-    // const user = await User.create({username, password, email})
     const user = await service.registerUser(req.body);
-    res.status(200).json({
-      success: true,
-      user: user,
-    });
+    res.status(200).json(user);
   }
 );
