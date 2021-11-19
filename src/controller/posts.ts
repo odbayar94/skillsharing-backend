@@ -66,6 +66,20 @@ export const getAllPosts = asyncHandler(
   }
 );
 
+export const getUserPosts = asyncHandler(
+  async (req: IRequest, res: Response, next: NextFunction) => {
+    const post = await service.getUserPosts(ObjectId(req.userId));
+    response = {
+      success: true,
+      statusCode: 200,
+      messageCode: "POST200",
+      message: "Хүсэлт амжилттай",
+      data: post,
+    };
+    res.status(200).json(response);
+  }
+);
+
 export const getSinglePost = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const post = await service.getSinglePost(ObjectId(req.params.id));

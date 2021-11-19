@@ -6,7 +6,7 @@ import protect from "../middleware/protect";
 const router = express.Router();
 
 router.route("/").post(protect, posts.createPost).get(posts.getAllPosts);
-// router.put("/:id", posts.updatePost);
+router.route("/user").get(protect, posts.getUserPosts);
 router.get("/:id", posts.getSinglePost);
 
 export default router;

@@ -25,7 +25,12 @@ var errorObj: IError = {
 };
 
 export const getAllPosts = async function () {
-  const posts = await Post.find();
+  const posts = await Post.find({ status: "Published" });
+  return posts;
+};
+
+export const getUserPosts = async function (userId: ObjectId) {
+  const posts = await Post.find(userId);
   return posts;
 };
 
