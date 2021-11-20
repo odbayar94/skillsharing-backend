@@ -53,6 +53,7 @@ export interface IError {
 export interface IUserModel extends Document {
   username: string;
   email: string;
+  role: string;
   password: string;
   lastname: string;
   firstname: string;

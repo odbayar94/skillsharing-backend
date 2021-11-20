@@ -4,12 +4,14 @@ import { ObjectId } from "mongoose";
 import config from "../config";
 import MyError from "../utils/MyError";
 import Post from "../models/Post";
+import User from "../models/User";
 
 import {
   IError,
   IRegisterUser,
   IPostResponse,
   IPostCreate,
+  IUserModel,
 } from "../interfaces";
 
 var response: IPostResponse = {
@@ -23,7 +25,30 @@ var errorObj: IError = {
   messageCode: "",
   statusCode: 401,
 };
+export const publishPost = async function (req: any) {
+  try {
+    const user = await User.findById(req.userId);
 
+    if (!user || user.role !== "admin") {
+      // console.log(user.role);
+      throw new Error();
+    }
+    const post = await Post.findOneAndUpdate(
+      { _id: req.postId },
+      { status: "Published" }
+    );
+    if (!post) {
+      throw new Error();
+    }
+    return post._id;
+  } catch (err: any) {
+    throw new MyError({
+      ...errorObj,
+      message: "Энэ үйлдлийг хийхэд таны эрх хүрсэнгүй",
+      messageCode: "POST401",
+    });
+  }
+};
 export const getAllPosts = async function () {
   const posts = await Post.find({ status: "Published" });
   return posts;

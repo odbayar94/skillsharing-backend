@@ -21,6 +21,24 @@ var errorObj: IError = {
   statusCode: 401,
 };
 
+export const publishPost = asyncHandler(
+  async (req: IRequest, res: Response, next: NextFunction) => {
+    req.body.userId = req.userId;
+    req.body.postId = req.params.id;
+    const postId = await service.publishPost(req.body);
+
+    response = {
+      success: true,
+      statusCode: 200,
+      messageCode: "POST200",
+      message: "Хүсэлт амжилттай",
+      data: {
+        id: postId,
+      },
+    };
+    res.status(200).json(response);
+  }
+);
 export const createPost = asyncHandler(
   async (req: IRequest, res: Response, next: NextFunction) => {
     req.body.userId = req.userId;

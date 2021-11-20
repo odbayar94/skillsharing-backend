@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.route("/").post(protect, posts.createPost).get(posts.getAllPosts);
 router.route("/user").get(protect, posts.getUserPosts);
+router.route("/:id/publish").put(protect, posts.publishPost);
 router.get("/:id", posts.getSinglePost);
 
 export default router;
