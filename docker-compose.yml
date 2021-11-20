@@ -1,0 +1,14 @@
+version: "3.3"
+
+services:
+  sharing-backend:
+    stdin_open: true
+    container_name: sharing-backend
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 5001:5001
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
