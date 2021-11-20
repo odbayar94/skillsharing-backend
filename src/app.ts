@@ -14,7 +14,7 @@ const whiteList = [process.env.FRONT_END];
 
 const corsOptions = {
   origin: function (origin: any, callback: any) {
-    if (origin !== process.env.FRONT_END) {
+    if (origin == process.env.FRONT_END) {
       callback(null, true);
     } else {
       throw new MyError({
