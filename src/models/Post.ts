@@ -8,7 +8,7 @@ const PostSchema = new Schema(
 
     status: {
       type: String,
-      default: "Draft",
+      default: "Pending",
     },
     title: { type: String, required: true },
     context: { type: String, required: true },
