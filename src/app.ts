@@ -1,8 +1,7 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 
-// import monitaRouter from "./routes/monita";
-
+import dashboardRouter from "./routes/dashboard";
 import userRouter from "./routes/user";
 import postRouter from "./routes/post";
 import cookieParser from "cookie-parser";
@@ -35,13 +34,10 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(cors(corsOptions));
 
-app.get("/", (req: Request, res: Response) => {
-  res.send([{ name: "user1" }, { name: "user2" }]);
-});
-
 //router
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/posts", postRouter);
+app.use("/api/v1/dashboards", dashboardRouter);
 app.use(errorHandler);
 
 export default app;
