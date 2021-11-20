@@ -25,12 +25,32 @@ var errorObj: IError = {
   messageCode: "",
   statusCode: 401,
 };
+
+export const clapPost = async function (id: any) {
+  try {
+    const post = await Post.findOneAndUpdate(
+      { _id: id },
+      { $inc: { clapsNumber: 1 } }
+    );
+
+    if (!post) {
+      throw new Error();
+    }
+    //end umnuh clapsNumber iig butsaagaad bgaa uchraas 1r nemegduulev
+    return { id: post._id, clapsNumber: post.clapsNumber + 1 };
+  } catch (err: any) {
+    throw new MyError({
+      ...errorObj,
+      message: "Пост бичлэг олдсонгүй",
+      messageCode: "POST401",
+    });
+  }
+};
 export const publishPost = async function (req: any) {
   try {
     const user = await User.findById(req.userId);
 
     if (!user || user.role !== "admin") {
-      // console.log(user.role);
       throw new Error();
     }
     const post = await Post.findOneAndUpdate(
@@ -74,6 +94,15 @@ export const getSinglePost = async function (id: ObjectId) {
     });
   }
 };
+
+const computeReadTime = function (context: String) {
+  //there are need to compute read time,
+  //after need to imporve the algorithm.
+  //https://infusion.media/content-marketing/how-to-calculate-reading-time/
+  const time = Math.floor(context.split(" ").length / 200);
+
+  return time == 0 ? 1 : time;
+};
 export const createPost = async function (req: IPostCreate) {
   try {
     const { title, context, userId } = req;
@@ -81,6 +110,7 @@ export const createPost = async function (req: IPostCreate) {
       title,
       context,
       userId,
+      time: computeReadTime(context),
     });
     if (!post) {
       throw new Error();

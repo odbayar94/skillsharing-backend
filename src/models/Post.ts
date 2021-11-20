@@ -13,6 +13,9 @@ const PostSchema = new Schema(
     title: { type: String, required: true },
     context: { type: String, required: true },
     clapsNumber: { type: Number, default: 0 },
+    comments: { type: Number, default: 0 },
+    time: { type: Number, required: true },
+    read: { type: Number, default: 0 },
   },
   {
     timestamps: true,

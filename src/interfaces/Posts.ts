@@ -15,6 +15,8 @@ export interface IPost {
   title: string;
   context: string;
   clapsNumber: number;
+  time: number;
+  read: number;
 }
 
 export interface IPostCreate {
