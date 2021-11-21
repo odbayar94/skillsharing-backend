@@ -6,7 +6,7 @@ const DashboardSchema = new Schema(
   {
     salary: { type: Number },
     point: { type: Number },
-    month: { type: Date },
+    month: { type: String },
   },
   {
     timestamps: true,

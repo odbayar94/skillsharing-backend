@@ -5,6 +5,8 @@ import config from "../config";
 import MyError from "../utils/MyError";
 import Post from "../models/Post";
 import User from "../models/User";
+import Dashboard from "../models/Dashboard";
+import * as service from "./index";
 
 import {
   IError,
@@ -49,6 +51,7 @@ export const clapPost = async function (id: any) {
 export const publishPost = async function (req: any) {
   try {
     const user = await User.findById(req.userId);
+    service.generateDashboard();
 
     if (!user || user.role !== "admin") {
       throw new Error();
@@ -70,6 +73,10 @@ export const publishPost = async function (req: any) {
   }
 };
 export const getAllPosts = async function () {
+  const posts = await Post.find();
+  return posts;
+};
+export const getApprovedPosts = async function () {
   const posts = await Post.find({ status: "Published" });
   return posts;
 };

@@ -34,7 +34,6 @@ const protect = asyncHandler(
     }
 
     const tokenObj: any = jwt.verify(token, config.jwtSecret);
-    // var userId = new mongoose.Types.ObjectId("615575e1ad87816358d970cb");
     req.userId = tokenObj.id;
     req.userRole = tokenObj.role;
 

@@ -6,13 +6,7 @@ import MyError from "../utils/MyError";
 import Post from "../models/Post";
 import User from "../models/User";
 
-import {
-  IError,
-  IRegisterUser,
-  IPostResponse,
-  IPostCreate,
-  IUserModel,
-} from "../interfaces";
+import { IError, IPostResponse } from "../interfaces";
 import Dashboard from "../models/Dashboard";
 
 var response: IPostResponse = {
@@ -29,8 +23,12 @@ var errorObj: IError = {
 
 export const getDashboardCurrent = async function () {
   try {
-    const month = "date";
-    const dashboard = await Dashboard.findOne({ month });
+    const date = Date.now();
+    let date_ob = new Date(date);
+    let month = date_ob.getMonth() + 1;
+    let year = date_ob.getFullYear();
+
+    const dashboard = await Dashboard.findOne({ month: year + "-" + month });
 
     if (!dashboard) {
       throw new Error();
@@ -44,4 +42,12 @@ export const getDashboardCurrent = async function () {
       messageCode: "POST401",
     });
   }
+};
+
+export const generateDashboard = async function () {
+  const date = Date.now();
+  let date_ob = new Date(date);
+  let month = date_ob.getMonth() + 1;
+  let year = date_ob.getFullYear();
+  Dashboard.create({ salary: 0, point: 0, month: year + "-" + month });
 };

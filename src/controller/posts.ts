@@ -81,12 +81,24 @@ export const createPost = asyncHandler(
 //     });
 //   }
 // );
-
 export const getAllPosts = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const posts = await service.getAllPosts();
+    response = {
+      success: true,
+      statusCode: 200,
+      messageCode: "POST200",
+      message: "Хүсэлт амжилттай",
+      data: posts,
+    };
+    res.status(200).json(response);
+  }
+);
+export const getApprovedPosts = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     //after I will add the pagination
 
-    const posts = await service.getAllPosts();
+    const posts = await service.getApprovedPosts();
     response = {
       success: true,
       statusCode: 200,
