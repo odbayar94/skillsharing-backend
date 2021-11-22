@@ -14,8 +14,8 @@ const checkPassword = async function (
   let isValid = await bcrypt.compare(enteredPassword, userPassword);
   return isValid;
 };
-const getJsonWebToken = async function (id: string) {
-  const token = jwt.sign({ id }, config.jwtSecret, {
+const getJsonWebToken = async function (id: string, role: string) {
+  const token = jwt.sign({ id, role }, config.jwtSecret, {
     expiresIn: config.jwtExpiresIn,
   });
 
@@ -56,7 +56,7 @@ export const getUser = async function (email: string, password: string) {
       };
       throw new Error();
     }
-    const token = await getJsonWebToken(user._id);
+    const token = await getJsonWebToken(user._id, user.role);
     response = {
       success: true,
       statusCode: 200,
