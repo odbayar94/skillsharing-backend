@@ -112,6 +112,7 @@ export const getApprovedPosts = asyncHandler(
 
 export const getUserPosts = asyncHandler(
   async (req: IRequest, res: Response, next: NextFunction) => {
+    console.log(req.userId);
     const post = await service.getUserPosts(ObjectId(req.userId));
     response = {
       success: true,

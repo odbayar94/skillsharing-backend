@@ -82,7 +82,7 @@ export const getApprovedPosts = async function () {
 };
 
 export const getUserPosts = async function (userId: ObjectId) {
-  const posts = await Post.find(userId);
+  const posts = await Post.find({ userId });
   return posts;
 };
 
